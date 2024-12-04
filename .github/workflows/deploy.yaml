@@ -1,0 +1,61 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: temarych/goodzik-api:latest
+          cache-from: type=registry,ref=temarych/goodzik-api:cache
+          cache-to: type=registry,ref=temarych/goodzik-api:cache,mode=max
+
+      - name: Logout from DockerHub
+        run: docker logout
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: SSH to DigitalOcean and run Docker
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            docker pull temarych/goodzik-api:latest
+            docker stop goodzik-api || true
+            docker rm goodzik-api || true
+            docker run -d --name goodzik-api -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+              -e PORT=${{ secrets.PORT }} \
+              -e PUBLIC_URL=${{ secrets.PUBLIC_URL }} \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              -e JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }} \
+              -e HASH_ROUNDS=${{ secrets.HASH_ROUNDS }} \
+              --restart unless-stopped \
+              temarych/goodzik-api:latest
