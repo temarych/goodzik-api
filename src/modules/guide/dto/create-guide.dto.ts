@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateGuideDto {
   @IsString()
@@ -16,4 +16,9 @@ export class CreateGuideDto {
   @IsNotEmpty()
   @ApiProperty()
   public imageUrl: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty({ type: [String] })
+  public categories: string[];
 }

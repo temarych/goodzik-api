@@ -66,7 +66,7 @@ export class GuideController {
     tags: ['guide'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse({ type: [GuideDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuides() {
     const guides = await this.guideService.findAll();
@@ -81,7 +81,7 @@ export class GuideController {
     tags: ['guide'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async updateGuide(
     @Param('id') id: string,
@@ -98,7 +98,7 @@ export class GuideController {
     tags: ['guide'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async deleteGuide(@Param('id') id: string) {
     await this.guideService.delete(id);

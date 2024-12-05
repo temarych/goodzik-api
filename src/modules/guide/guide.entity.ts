@@ -19,7 +19,7 @@ export class Guide {
   @Column()
   public description: string;
 
-  @Column('timestamp')
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   public date: Date;
 
   @Column()

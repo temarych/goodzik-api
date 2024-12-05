@@ -1,29 +1,21 @@
-import { Column, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '@modules/user/entities/user.entity';
-import { GuideCategory } from '@modules/guide-category/guide-category.entity';
+import { ApiProperty } from '@nestjs/swagger';
 import { Guide } from '../guide.entity';
 
 export class GuideDto {
-  @PrimaryGeneratedColumn('uuid')
+  @ApiProperty()
   public id: string;
 
-  @Column()
+  @ApiProperty()
   public title: string;
 
-  @Column()
+  @ApiProperty()
   public description: string;
 
-  @Column('timestamp')
+  @ApiProperty()
   public date: Date;
 
-  @Column()
+  @ApiProperty()
   public imageUrl: string;
-
-  @ManyToMany(() => GuideCategory, (category) => category.id)
-  public categories: GuideCategory[];
-
-  @ManyToOne(() => User, (user) => user.id)
-  public author: User;
 
   public static fromEntity(entity: Guide): GuideDto {
     const dto = new GuideDto();

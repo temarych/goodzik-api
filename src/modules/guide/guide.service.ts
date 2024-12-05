@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Guide } from './guide.entity';
+import { CreateGuideDto } from './dto/create-guide.dto';
+import { UpdateGuideDto } from './dto/update-guide.dto';
 
 @Injectable()
 export class GuideService {
@@ -10,8 +12,11 @@ export class GuideService {
     private readonly guideRepository: Repository<Guide>,
   ) {}
 
-  public async create(data: DeepPartial<Guide>): Promise<Guide> {
-    return await this.guideRepository.save(data);
+  public async create(data: CreateGuideDto): Promise<Guide> {
+    return await this.guideRepository.save({
+      ...data,
+      categories: data.categories.map((category) => ({ id: category })),
+    });
   }
 
   public async findAll(): Promise<Guide[]> {
@@ -22,8 +27,11 @@ export class GuideService {
     return await this.guideRepository.findOne({ where: { id } });
   }
 
-  public async update(id: string, data: DeepPartial<Guide>): Promise<void> {
-    await this.guideRepository.update(id, data);
+  public async update(id: string, data: UpdateGuideDto): Promise<void> {
+    await this.guideRepository.update(id, {
+      ...data,
+      categories: data.categories?.map((category) => ({ id: category })),
+    });
   }
 
   public async delete(id: string): Promise<void> {

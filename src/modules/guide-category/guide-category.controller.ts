@@ -18,7 +18,6 @@ import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { AuthGuard } from '@modules/auth/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
-import { GuideDto } from '@modules/guide/dto/guide.dto';
 import { GuideCategoryService } from './guide-category.service';
 import { GuideCategoryDto } from './dto/guide-category.dto';
 import { CreateGuideCategoryDto } from './dto/create-guide-category.dto';
@@ -36,7 +35,7 @@ export class GuideCategoryController {
     tags: ['guide-category'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse({ type: GuideCategoryDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async createGuideCategory(@Body() data: CreateGuideCategoryDto) {
     const guideCategory = await this.guideCategoryService.create(data);
@@ -51,7 +50,7 @@ export class GuideCategoryController {
     tags: ['guide-category'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse({ type: [GuideCategoryDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuideCategories() {
     const guideCategories = await this.guideCategoryService.findAll();
@@ -61,7 +60,7 @@ export class GuideCategoryController {
   @Get(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Create a guide',
+    summary: 'Get a guide category',
     operationId: 'getGuideCategory',
     tags: ['guide-category'],
   })
@@ -77,12 +76,12 @@ export class GuideCategoryController {
   @Put(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Create a guide',
+    summary: 'Update a guide category',
     operationId: 'updateGuideCategory',
     tags: ['guide-category'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideCategoryDto })
+  @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async updateGuideCategory(
     @Param('id') id: string,
@@ -94,12 +93,12 @@ export class GuideCategoryController {
   @Delete(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Create a guide',
+    summary: 'Delete a guide category',
     operationId: 'deleteGuideCategory',
     tags: ['guide-category'],
   })
   @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideCategoryDto })
+  @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async deleteGuideCategory(@Param('id') id: string) {
     await this.guideCategoryService.delete(id);
