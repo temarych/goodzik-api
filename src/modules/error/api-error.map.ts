@@ -23,4 +23,8 @@ export const apiErrorMap: IApiErrorMap = {
     status: HttpStatus.UNAUTHORIZED,
     message: 'Unauthorized',
   },
+  [ApiErrorCode.Forbidden]: {
+    status: HttpStatus.FORBIDDEN,
+    message: 'Forbidden',
+  },
 };

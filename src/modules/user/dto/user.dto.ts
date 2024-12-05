@@ -9,10 +9,22 @@ export class UserDto {
   public id: string;
 
   @ApiProperty({
+    example: 'johnDoe1999',
+    description: 'Username of the user',
+  })
+  public userName: string;
+
+  @ApiProperty({
     example: 'John Doe',
     description: 'The name of the user',
   })
   public email: string;
+
+  @ApiProperty({
+    example: 'customer',
+    description: 'Role of the user',
+  })
+  public role: string;
 
   public static fromEntity(entity: User): UserDto {
     const dto = new UserDto();
