@@ -5,6 +5,8 @@ import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { NewsModule } from '@modules/news/news.module';
 import { AdminModule } from '@modules/admin/admin.module';
+import { GuideModule } from '@modules/guide/guide.module';
+import { GuideCategoryModule } from '@modules/guide-category/guide-category.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { AdminModule } from '@modules/admin/admin.module';
     UserModule,
     NewsModule,
     AdminModule,
+    GuideModule,
+    GuideCategoryModule,
   ],
 })
 export class AppModule {}
