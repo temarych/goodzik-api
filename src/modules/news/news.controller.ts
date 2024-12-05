@@ -30,7 +30,12 @@ export class NewsController {
     );
 
     const allNews = [...filteredFirstChannelNews, ...news2];
+    const newsWithDatetime = allNews.filter((news: News) => news.datetime);
+    const sortedNews = newsWithDatetime.sort(
+      (a: News, b: News) =>
+        new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
+    );
 
-    return allNews;
+    return sortedNews;
   }
 }
