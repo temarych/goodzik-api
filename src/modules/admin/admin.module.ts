@@ -1,13 +1,12 @@
-import { Module, forwardRef } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from '@modules/user/user.module';
-import { UserService } from '@modules/user/user.service';
+import { HashService } from '@modules/auth/hash/hash.service';
+import { AuthService } from '@modules/auth/auth.service';
 import { User } from '@modules/user/entities/user.entity';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { HashService } from './hash/hash.service';
+import { UserService } from '@modules/user/user.service';
+import { AdminController } from './admin.controller';
 
 @Module({
   imports: [
@@ -18,11 +17,11 @@ import { HashService } from './hash/hash.service';
         secret: configService.get('JWT_SECRET'),
       }),
     }),
-    forwardRef(() => UserModule),
+    forwardRef(() => AdminModule),
     TypeOrmModule.forFeature([User]),
   ],
   exports: [AuthService],
-  controllers: [AuthController],
+  controllers: [AdminController],
   providers: [AuthService, HashService, UserService],
 })
-export class AuthModule {}
+export class AdminModule {}

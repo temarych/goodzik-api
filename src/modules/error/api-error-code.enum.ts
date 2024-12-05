@@ -3,4 +3,5 @@ export enum ApiErrorCode {
   EntityNotFound = 'entity-not-found',
   EmailNotUnique = 'email-not-unique',
   Unauthorized = 'unauthorized',
+  Forbidden = 'forbidden',
 }

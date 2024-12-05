@@ -29,7 +29,11 @@ export class AuthService {
 
     const password = await this.hashService.hash(data.password);
 
-    const user = await this.userService.create({ ...data, password });
+    const user = await this.userService.create({
+      ...data,
+      password,
+      role: 'customer',
+    });
 
     const accessToken = this.jwtService.sign({ id: user.id });
 
@@ -47,6 +51,7 @@ export class AuthService {
     );
 
     if (!isCorrectPassword) throw new ApiError(ApiErrorCode.Unauthorized);
+    if (user.role != 'customer') throw new ApiError(ApiErrorCode.Forbidden);
 
     const accessToken = this.jwtService.sign({ id: user.id });
 
@@ -54,6 +59,41 @@ export class AuthService {
   }
 
   public async authorize(data: IAuthorizeData): Promise<IAuthorizeResult> {
+    try {
+      const payload = this.jwtService.verify<IAccessTokenPayload>(
+        data.accessToken,
+      );
+
+      const user = await this.userService.findOne(payload.id);
+
+      if (!user) throw new ApiError(ApiErrorCode.EntityNotFound);
+      if (user.role != 'customer') throw new ApiError(ApiErrorCode.Forbidden);
+
+      return { user };
+    } catch (error) {
+      if (error instanceof ApiError) throw error;
+      throw new ApiError(ApiErrorCode.Unauthorized);
+    }
+  }
+
+  public async logInAdmin(data: ILogInData): Promise<ILogInResult> {
+    const user = await this.userService.findOneByEmail(data.email);
+
+    if (!user) throw new ApiError(ApiErrorCode.EntityNotFound);
+
+    const isCorrectPassword = await this.hashService.compare(
+      data.password,
+      user.password,
+    );
+
+    if (!isCorrectPassword) throw new ApiError(ApiErrorCode.Unauthorized);
+    if (user.role != 'admin') throw new ApiError(ApiErrorCode.Forbidden);
+
+    const accessToken = this.jwtService.sign({ id: user.id });
+    return { user, accessToken };
+  }
+
+  public async authorizeAdmin(data: IAuthorizeData): Promise<IAuthorizeResult> {
     try {
       const payload = this.jwtService.verify<IAccessTokenPayload>(
         data.accessToken,
