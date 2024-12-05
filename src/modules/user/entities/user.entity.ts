@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Guide } from '@modules/guide/guide.entity';
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column()
   public role: string;
+
+  @OneToMany(() => Guide, (guide) => guide.author)
+  public guides: Guide[];
 }

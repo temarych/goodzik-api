@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public async create(data: Omit<User, 'id'>): Promise<User> {
+  public async create(data: DeepPartial<User>): Promise<User> {
     return await this.userRepository.save(data);
   }
 
@@ -26,10 +26,7 @@ export class UserService {
     return await this.userRepository.findOneBy({ email });
   }
 
-  public async update(
-    id: string,
-    data: Partial<Omit<User, 'id'>>,
-  ): Promise<void> {
+  public async update(id: string, data: DeepPartial<User>): Promise<void> {
     await this.userRepository.update(id, data);
   }
 

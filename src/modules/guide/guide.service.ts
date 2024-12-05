@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ApiErrorCode } from '@modules/error/api-error-code.enum';
+import { ApiError } from '@modules/error/api-error.entity';
 import { Guide } from './guide.entity';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
@@ -13,10 +15,8 @@ export class GuideService {
   ) {}
 
   public async create(data: CreateGuideDto): Promise<Guide> {
-    return await this.guideRepository.save({
-      ...data,
-      categories: data.categories.map((category) => ({ id: category })),
-    });
+    const categories = data.categories.map((category) => ({ id: category }));
+    return await this.guideRepository.save({ ...data, categories });
   }
 
   public async findAll(): Promise<Guide[]> {
@@ -28,10 +28,15 @@ export class GuideService {
   }
 
   public async update(id: string, data: UpdateGuideDto): Promise<void> {
-    await this.guideRepository.update(id, {
-      ...data,
-      categories: data.categories?.map((category) => ({ id: category })),
-    });
+    const guide = await this.findOne(id);
+
+    if (!guide) throw new ApiError(ApiErrorCode.EntityNotFound);
+
+    const categories = data.categories?.map((category) => ({ id: category }));
+
+    Object.assign(guide, { ...data, categories });
+
+    await this.guideRepository.save(guide);
   }
 
   public async delete(id: string): Promise<void> {

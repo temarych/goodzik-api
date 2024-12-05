@@ -9,6 +9,6 @@ export class GuideCategory {
   @Column()
   public name: string;
 
-  @ManyToMany(() => Guide, (guide) => guide.id)
+  @ManyToMany(() => Guide, (guide) => guide.categories)
   public guides: Guide[];
 }

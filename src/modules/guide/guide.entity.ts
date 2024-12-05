@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -25,7 +26,8 @@ export class Guide {
   @Column()
   public imageUrl: string;
 
-  @ManyToMany(() => GuideCategory, (category) => category.id)
+  @ManyToMany(() => GuideCategory, (category) => category.guides)
+  @JoinTable()
   public categories: GuideCategory[];
 
   @ManyToOne(() => User, (user) => user.id)
