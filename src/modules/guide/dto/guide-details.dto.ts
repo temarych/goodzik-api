@@ -21,6 +21,9 @@ export class GuideDetailsDto {
   public exampleImages: string[];
 
   @ApiProperty()
+  public schemas: string[];
+
+  @ApiProperty()
   public videoUrl: string;
 
   @ApiProperty({ type: [GuideStepDto] })

@@ -32,4 +32,9 @@ export class CreateGuideDto {
   @IsNotEmpty()
   @ApiProperty({ type: [CreateGuideStepDto] })
   public steps: CreateGuideStepDto[];
+
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty({ type: [String] })
+  public schemas: string[];
 }

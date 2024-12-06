@@ -26,4 +26,9 @@ export class UpdateGuideDto {
   @IsOptional()
   @ApiProperty({ required: false, type: [String] })
   public categories?: string[];
+
+  @IsArray()
+  @IsOptional()
+  @ApiProperty({ type: [String] })
+  public schemas?: string[];
 }

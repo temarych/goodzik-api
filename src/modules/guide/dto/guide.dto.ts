@@ -24,6 +24,9 @@ export class GuideDto {
   @ApiProperty({ type: UserDto })
   public author: UserDto;
 
+  @ApiProperty({ type: [String] })
+  public schemas: string[];
+
   public static fromEntity(entity: Guide): GuideDto {
     const dto = new GuideDto();
 
@@ -33,6 +36,7 @@ export class GuideDto {
     dto.date = entity.date;
     dto.exampleImages = entity.exampleImages;
     dto.videoUrl = entity.videoUrl;
+    dto.schemas = entity.schemas;
     dto.author = UserDto.fromEntity(entity.author);
 
     return dto;

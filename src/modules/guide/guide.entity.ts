@@ -33,6 +33,9 @@ export class Guide {
   public videoUrl: string;
 
   @Column('text', { array: true })
+  public schemas: string[];
+
+  @Column('text', { array: true })
   public exampleImages: string[];
 
   @OneToMany(() => GuideComment, (comment) => comment.id)
