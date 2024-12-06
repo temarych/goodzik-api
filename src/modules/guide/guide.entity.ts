@@ -42,7 +42,7 @@ export class Guide {
   @JoinTable()
   public categories: GuideCategory[];
 
-  @OneToMany(() => GuideStep, (step) => step.guides)
+  @OneToMany(() => GuideStep, (step) => step.guide)
   public steps: GuideStep[];
 
   @ManyToOne(() => User, (user) => user.guides)

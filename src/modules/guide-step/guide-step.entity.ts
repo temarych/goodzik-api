@@ -18,6 +18,6 @@ export class GuideStep {
   @Column()
   public image: string;
 
-  @ManyToOne(() => Guide, (guide) => guide.categories)
-  public guides: Guide[];
+  @ManyToOne(() => Guide, (guide) => guide.steps)
+  public guide: Guide;
 }
