@@ -47,7 +47,7 @@ export class GuideStepController {
   @ApiOperation({
     summary: 'Get all guide steps',
     operationId: 'getGuideSteps',
-    tags: ['guide-Step'],
+    tags: ['guide-step'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: [GuideStepDto] })
@@ -62,7 +62,7 @@ export class GuideStepController {
   @ApiOperation({
     summary: 'Get a guide Step',
     operationId: 'getGuideStep',
-    tags: ['guide-Step'],
+    tags: ['guide-step'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: GuideStepDto })
@@ -78,7 +78,7 @@ export class GuideStepController {
   @ApiOperation({
     summary: 'Update a guide Step',
     operationId: 'updateGuideStep',
-    tags: ['guide-Step'],
+    tags: ['guide-step'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse()
@@ -95,7 +95,7 @@ export class GuideStepController {
   @ApiOperation({
     summary: 'Delete a guide Step',
     operationId: 'deleteGuideStep',
-    tags: ['guide-Step'],
+    tags: ['guide-step'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse()
