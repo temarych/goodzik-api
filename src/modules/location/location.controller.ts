@@ -25,7 +25,7 @@ import { UpdateLocationDto } from './dto/update-location.dto';
 import { LocationDto } from './dto/location.dto';
 import { LocationService } from './location.service';
 
-@Controller('Locations')
+@Controller('locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
