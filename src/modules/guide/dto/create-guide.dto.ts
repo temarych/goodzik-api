@@ -17,6 +17,11 @@ export class CreateGuideDto {
   @ApiProperty()
   public imageUrl: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  public videoUrl: string;
+
   @IsArray()
   @IsNotEmpty()
   @ApiProperty({ type: [String] })

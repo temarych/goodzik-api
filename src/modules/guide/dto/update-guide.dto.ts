@@ -17,6 +17,11 @@ export class UpdateGuideDto {
   @ApiProperty({ required: false })
   public imageUrl?: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  public videoUrl?: string;
+
   @IsArray()
   @IsOptional()
   @ApiProperty({ required: false, type: [String] })

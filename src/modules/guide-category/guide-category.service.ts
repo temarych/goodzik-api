@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GuideCategory } from './guide-category.entity';
-import { CreateGuideCategoryDto } from './dto/create-guide-category.dto';
-import { UpdateGuideCategoryDto } from './dto/update-guide-category.dto';
 
 @Injectable()
 export class GuideCategoryService {
@@ -12,7 +10,9 @@ export class GuideCategoryService {
     private readonly guideCategoryRepository: Repository<GuideCategory>,
   ) {}
 
-  public async create(data: CreateGuideCategoryDto): Promise<GuideCategory> {
+  public async create(
+    data: DeepPartial<GuideCategory>,
+  ): Promise<GuideCategory> {
     return await this.guideCategoryRepository.save(data);
   }
 
@@ -24,7 +24,10 @@ export class GuideCategoryService {
     return await this.guideCategoryRepository.findOne({ where: { id } });
   }
 
-  public async update(id: string, data: UpdateGuideCategoryDto): Promise<void> {
+  public async update(
+    id: string,
+    data: DeepPartial<GuideCategory>,
+  ): Promise<void> {
     await this.guideCategoryRepository.update(id, data);
   }
 

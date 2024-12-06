@@ -32,7 +32,7 @@ export class GuideStepController {
   @ApiOperation({
     summary: 'Create a guide Step',
     operationId: 'createGuideStep',
-    tags: ['guide-Step'],
+    tags: ['guide-step'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: GuideStepDto })

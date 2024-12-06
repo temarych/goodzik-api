@@ -17,6 +17,9 @@ export class GuideDto {
   @ApiProperty()
   public imageUrl: string;
 
+  @ApiProperty()
+  public videoUrl: string;
+
   public static fromEntity(entity: Guide): GuideDto {
     const dto = new GuideDto();
 
@@ -25,6 +28,7 @@ export class GuideDto {
     dto.description = entity.description;
     dto.date = entity.date;
     dto.imageUrl = entity.imageUrl;
+    dto.videoUrl = entity.videoUrl;
 
     return dto;
   }
