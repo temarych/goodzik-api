@@ -15,8 +15,8 @@ export class CreateGuideDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
-  public imageUrl: string;
+  @ApiProperty({ type: [String] })
+  public exampleImages: string[];
 
   @IsString()
   @IsNotEmpty()

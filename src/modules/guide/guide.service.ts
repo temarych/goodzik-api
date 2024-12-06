@@ -18,6 +18,7 @@ export class GuideService {
 
     const steps = data.steps?.map((step) => ({
       ...step,
+      author: { id: data.authorId },
       guide: { id: data.id },
     }));
 

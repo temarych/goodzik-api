@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -20,6 +21,7 @@ import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
 import { UserRole } from '@modules/user/enums/user.enum';
 import { RoleGuard } from '@modules/auth/guards/role.guard';
+import { User } from '@modules/user/entities/user.entity';
 import { GuideService } from './guide.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
@@ -40,8 +42,14 @@ export class GuideController {
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: GuideDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async createGuide(@Body() data: CreateGuideDto) {
-    const guide = await this.guideService.create(data);
+  public async createGuide(@Body() data: CreateGuideDto, @Req() request) {
+    const user = request.user as User;
+
+    const guide = await this.guideService.create({
+      ...data,
+      authorId: user.id,
+    });
+
     return GuideDto.fromEntity(guide);
   }
 

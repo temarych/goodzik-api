@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { GuideStepDto } from '@modules/guide-step/dto/guide-step.dto';
+import { UserDto } from '@modules/user/dto/user.dto';
 import { Guide } from '../guide.entity';
 
 export class GuideDetailsDto {
@@ -15,14 +16,17 @@ export class GuideDetailsDto {
   @ApiProperty()
   public date: Date;
 
-  @ApiProperty()
-  public imageUrl: string;
+  @ApiProperty({ type: [String] })
+  public exampleImages: string[];
 
   @ApiProperty()
   public videoUrl: string;
 
   @ApiProperty({ type: [GuideStepDto] })
   public steps: GuideStepDto[];
+
+  @ApiProperty({ type: UserDto })
+  public author: UserDto;
 
   public static fromEntity(entity: Guide): GuideDetailsDto {
     const dto = new GuideDetailsDto();
@@ -31,9 +35,10 @@ export class GuideDetailsDto {
     dto.title = entity.title;
     dto.description = entity.description;
     dto.date = entity.date;
-    dto.imageUrl = entity.imageUrl;
+    dto.exampleImages = entity.exampleImages;
     dto.videoUrl = entity.videoUrl;
     dto.steps = entity.steps.map(GuideStepDto.fromEntity);
+    dto.author = UserDto.fromEntity(entity.author);
 
     return dto;
   }

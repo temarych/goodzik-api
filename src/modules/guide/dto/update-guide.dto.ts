@@ -14,8 +14,8 @@ export class UpdateGuideDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  public imageUrl?: string;
+  @ApiProperty({ required: false, type: [String] })
+  public exampleImages?: string[];
 
   @IsString()
   @IsOptional()

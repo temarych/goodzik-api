@@ -31,6 +31,9 @@ export class Guide {
   @Column()
   public videoUrl: string;
 
+  @Column('text', { array: true })
+  public exampleImages: string[];
+
   @ManyToMany(() => GuideCategory, (category) => category.guides)
   @JoinTable()
   public categories: GuideCategory[];
