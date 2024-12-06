@@ -10,9 +10,9 @@ export class GuideComment {
   @Column()
   public text: string;
 
-  @ManyToOne(() => Guide, (guide) => guide.id)
+  @ManyToOne(() => Guide, (guide) => guide.comments)
   public guide: Guide;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.comments)
   public author: User;
 }

@@ -22,7 +22,14 @@ export class GuideService {
       guide: { id: data.id },
     }));
 
-    return await this.guideRepository.save({ ...data, categories, steps });
+    const { id } = await this.guideRepository.save({
+      ...data,
+      categories,
+      steps,
+      author: { id: data.authorId },
+    });
+
+    return (await this.findOne(id)) as Guide;
   }
 
   public async findAll(): Promise<Guide[]> {

@@ -27,9 +27,6 @@ export class Guide {
   public date: Date;
 
   @Column()
-  public imageUrl: string;
-
-  @Column()
   public videoUrl: string;
 
   @Column('text', { array: true })
@@ -38,7 +35,7 @@ export class Guide {
   @Column('text', { array: true })
   public exampleImages: string[];
 
-  @OneToMany(() => GuideComment, (comment) => comment.id)
+  @OneToMany(() => GuideComment, (comment) => comment.guide)
   public comments: GuideComment[];
 
   @ManyToMany(() => GuideCategory, (category) => category.guides)
@@ -48,6 +45,6 @@ export class Guide {
   @OneToMany(() => GuideStep, (step) => step.guides)
   public steps: GuideStep[];
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.guides)
   public author: User;
 }
