@@ -50,6 +50,7 @@ export class NewsController {
         title: newsTitle,
         image: news.message_photo,
         description: news.message_text,
+        author: news.user_name,
         date: news.datetime,
       };
     });
