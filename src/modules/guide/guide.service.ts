@@ -15,15 +15,26 @@ export class GuideService {
 
   public async create(data: CreateGuideData): Promise<Guide> {
     const categories = data.categories?.map((category) => ({ id: category }));
-    return await this.guideRepository.save({ ...data, categories });
+
+    const steps = data.steps?.map((step) => ({
+      ...step,
+      guide: { id: data.id },
+    }));
+
+    return await this.guideRepository.save({ ...data, categories, steps });
   }
 
   public async findAll(): Promise<Guide[]> {
-    return await this.guideRepository.find();
+    return await this.guideRepository.find({
+      relations: ['steps', 'categories'],
+    });
   }
 
   public async findOne(id: string): Promise<Guide | null> {
-    return await this.guideRepository.findOne({ where: { id } });
+    return await this.guideRepository.findOne({
+      where: { id },
+      relations: ['steps', 'categories'],
+    });
   }
 
   public async update(id: string, data: UpdateGuideData): Promise<void> {
