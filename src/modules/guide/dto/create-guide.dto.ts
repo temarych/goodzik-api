@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { CreateGuideStepDto } from '@modules/guide-step/dto/create-guide-step.dto';
 
 export class CreateGuideDto {
   @IsString()
@@ -26,4 +27,9 @@ export class CreateGuideDto {
   @IsNotEmpty()
   @ApiProperty({ type: [String] })
   public categories: string[];
+
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty({ type: [CreateGuideStepDto] })
+  public steps: CreateGuideStepDto[];
 }

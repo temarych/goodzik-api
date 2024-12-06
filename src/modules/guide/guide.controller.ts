@@ -24,6 +24,7 @@ import { GuideService } from './guide.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
 import { GuideDto } from './dto/guide.dto';
+import { GuideDetailsDto } from './dto/guide-details.dto';
 
 @Controller('guides')
 export class GuideController {
@@ -63,12 +64,12 @@ export class GuideController {
     operationId: 'getGuide',
     tags: ['guide'],
   })
-  @ApiOkResponse({ type: GuideDto })
+  @ApiOkResponse({ type: GuideDetailsDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuide(@Param('id') id: string) {
     const guide = await this.guideService.findOne(id);
     if (!guide) throw new ApiError(ApiErrorCode.EntityNotFound);
-    return GuideDto.fromEntity(guide);
+    return GuideDetailsDto.fromEntity(guide);
   }
 
   @Put(':id')
