@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
+import { GuideStep } from '@modules/guide-step/guide-step.entity';
 import { Guide } from './guide.entity';
 import { CreateGuideData, UpdateGuideData } from './guide.service.types';
 
@@ -11,23 +12,26 @@ export class GuideService {
   constructor(
     @InjectRepository(Guide)
     private readonly guideRepository: Repository<Guide>,
+    @InjectRepository(GuideStep)
+    private readonly guideStepRepository: Repository<GuideStep>,
   ) {}
 
   public async create(data: CreateGuideData): Promise<Guide> {
     const categories = data.categories?.map((category) => ({ id: category }));
 
-    const steps = data.steps?.map((step) => ({
-      ...step,
-      author: { id: data.authorId },
-      guide: { id: data.id },
-    }));
-
     const { id } = await this.guideRepository.save({
       ...data,
       categories,
-      steps,
       author: { id: data.authorId },
     });
+
+    await this.guideStepRepository.save(
+      (data.steps ?? []).map((step) => ({
+        ...step,
+        author: { id: data.authorId },
+        guide: { id },
+      })),
+    );
 
     return (await this.findOne(id)) as Guide;
   }
