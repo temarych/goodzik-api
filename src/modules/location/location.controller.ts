@@ -34,7 +34,7 @@ export class LocationController {
   @ApiOperation({
     summary: 'Create a location',
     operationId: 'createLocation',
-    tags: ['Location'],
+    tags: ['location'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: LocationDto })
@@ -45,13 +45,11 @@ export class LocationController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get a location',
     operationId: 'getLocation',
-    tags: ['Location'],
+    tags: ['location'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: LocationDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getLocation(@Param('id') id: string) {
@@ -61,13 +59,11 @@ export class LocationController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get locations',
     operationId: 'getLocations',
-    tags: ['Location'],
+    tags: ['location'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: [LocationDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getLocations() {
@@ -80,7 +76,7 @@ export class LocationController {
   @ApiOperation({
     summary: 'Update a location',
     operationId: 'updateLocation',
-    tags: ['Location'],
+    tags: ['location'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse()
@@ -97,7 +93,7 @@ export class LocationController {
   @ApiOperation({
     summary: 'Delete a location',
     operationId: 'deleteLocation',
-    tags: ['Location'],
+    tags: ['location'],
   })
   @ApiSecurity('bearer')
   @ApiOkResponse()
