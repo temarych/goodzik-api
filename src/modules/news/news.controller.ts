@@ -14,7 +14,7 @@ const secondTelegramChannelName = 'shveina_rota';
 @Controller('news')
 export class NewsController {
   @Get()
-  @ApiOperation({ summary: 'News', operationId: 'get news', tags: ['news'] })
+  @ApiOperation({ summary: 'News', operationId: 'getNews', tags: ['news'] })
   @ApiOkResponse({ type: NewsResponseDto })
   @ApiBadRequestResponse({ type: ApiErrorDto })
   async getNews() {
