@@ -16,8 +16,10 @@ import {
 } from '@nestjs/swagger';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
+import { UserRole } from '@modules/user/enums/user.enum';
+import { RoleGuard } from '@modules/auth/guards/role.guard';
 import { GuideCategoryService } from './guide-category.service';
 import { GuideCategoryDto } from './dto/guide-category.dto';
 import { CreateGuideCategoryDto } from './dto/create-guide-category.dto';
@@ -28,7 +30,7 @@ export class GuideCategoryController {
   constructor(private readonly guideCategoryService: GuideCategoryService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Create a guide category',
     operationId: 'createGuideCategory',
@@ -74,7 +76,7 @@ export class GuideCategoryController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Update a guide category',
     operationId: 'updateGuideCategory',
@@ -91,7 +93,7 @@ export class GuideCategoryController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Delete a guide category',
     operationId: 'deleteGuideCategory',

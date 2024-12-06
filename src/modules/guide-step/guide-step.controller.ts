@@ -16,8 +16,10 @@ import {
 } from '@nestjs/swagger';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
+import { UserRole } from '@modules/user/enums/user.enum';
+import { RoleGuard } from '@modules/auth/guards/role.guard';
 import { GuideStepService } from './guide-step.service';
 import { GuideStepDto } from './dto/guide-step.dto';
 import { CreateGuideStepDto } from './dto/create-guide-step.dto';
@@ -28,9 +30,9 @@ export class GuideStepController {
   constructor(private readonly guideStepService: GuideStepService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
-    summary: 'Create a guide Step',
+    summary: 'Create a guide step',
     operationId: 'createGuideStep',
     tags: ['guide-step'],
   })
@@ -60,7 +62,7 @@ export class GuideStepController {
   @Get(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({
-    summary: 'Get a guide Step',
+    summary: 'Get a guide step',
     operationId: 'getGuideStep',
     tags: ['guide-step'],
   })
@@ -74,9 +76,9 @@ export class GuideStepController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
-    summary: 'Update a guide Step',
+    summary: 'Update a guide step',
     operationId: 'updateGuideStep',
     tags: ['guide-step'],
   })
@@ -91,9 +93,9 @@ export class GuideStepController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
-    summary: 'Delete a guide Step',
+    summary: 'Delete a guide step',
     operationId: 'deleteGuideStep',
     tags: ['guide-step'],
   })

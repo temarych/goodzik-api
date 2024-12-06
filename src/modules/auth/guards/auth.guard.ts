@@ -2,10 +2,10 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
-import { AuthService } from '@modules/auth/auth.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
-export class AdminRoleGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -14,12 +14,8 @@ export class AdminRoleGuard implements CanActivate {
 
     if (!accessToken) throw new ApiError(ApiErrorCode.Unauthorized);
 
-    const result = await this.authService.authorizeAdmin({ accessToken });
-
-    if (result.user.role !== 'admin')
-      throw new ApiError(ApiErrorCode.Forbidden);
-
-    request['admin'] = result!.user;
+    const result = await this.authService.authorize({ accessToken });
+    request['user'] = result!.user;
 
     return true;
   }

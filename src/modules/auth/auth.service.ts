@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@modules/user/user.service';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
+import { UserRole } from '@modules/user/enums/user.enum';
+
 import { HashService } from './hash/hash.service';
 import {
   IAccessTokenPayload,
@@ -32,7 +34,7 @@ export class AuthService {
     const user = await this.userService.create({
       ...data,
       password,
-      role: 'customer',
+      role: UserRole.Customer,
     });
 
     const accessToken = this.jwtService.sign({ id: user.id });
@@ -51,7 +53,6 @@ export class AuthService {
     );
 
     if (!isCorrectPassword) throw new ApiError(ApiErrorCode.Unauthorized);
-    if (user.role != 'customer') throw new ApiError(ApiErrorCode.Forbidden);
 
     const accessToken = this.jwtService.sign({ id: user.id });
 
@@ -59,41 +60,6 @@ export class AuthService {
   }
 
   public async authorize(data: IAuthorizeData): Promise<IAuthorizeResult> {
-    try {
-      const payload = this.jwtService.verify<IAccessTokenPayload>(
-        data.accessToken,
-      );
-
-      const user = await this.userService.findOne(payload.id);
-
-      if (!user) throw new ApiError(ApiErrorCode.EntityNotFound);
-      if (user.role != 'customer') throw new ApiError(ApiErrorCode.Forbidden);
-
-      return { user };
-    } catch (error) {
-      if (error instanceof ApiError) throw error;
-      throw new ApiError(ApiErrorCode.Unauthorized);
-    }
-  }
-
-  public async logInAdmin(data: ILogInData): Promise<ILogInResult> {
-    const user = await this.userService.findOneByEmail(data.email);
-
-    if (!user) throw new ApiError(ApiErrorCode.EntityNotFound);
-
-    const isCorrectPassword = await this.hashService.compare(
-      data.password,
-      user.password,
-    );
-
-    if (!isCorrectPassword) throw new ApiError(ApiErrorCode.Unauthorized);
-    if (user.role != 'admin') throw new ApiError(ApiErrorCode.Forbidden);
-
-    const accessToken = this.jwtService.sign({ id: user.id });
-    return { user, accessToken };
-  }
-
-  public async authorizeAdmin(data: IAuthorizeData): Promise<IAuthorizeResult> {
     try {
       const payload = this.jwtService.verify<IAccessTokenPayload>(
         data.accessToken,

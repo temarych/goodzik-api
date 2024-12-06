@@ -14,10 +14,12 @@ import {
   ApiSecurity,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
+import { UserRole } from '@modules/user/enums/user.enum';
+import { RoleGuard } from '@modules/auth/guards/role.guard';
 import { PartnerService } from './partner.service';
 import { CreatePartnerDto } from './dto/create-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
@@ -28,7 +30,7 @@ export class PartnerController {
   constructor(private readonly partnerService: PartnerService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Create a Partner',
     operationId: 'createPartner',
@@ -74,7 +76,7 @@ export class PartnerController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Update a Partner',
     operationId: 'updatePartner',
@@ -91,7 +93,7 @@ export class PartnerController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Delete a Partner',
     operationId: 'deletePartner',

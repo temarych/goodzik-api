@@ -14,10 +14,12 @@ import {
   ApiSecurity,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
+import { UserRole } from '@modules/user/enums/user.enum';
+import { RoleGuard } from '@modules/auth/guards/role.guard';
 import { GuideService } from './guide.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
@@ -28,7 +30,7 @@ export class GuideController {
   constructor(private readonly guideService: GuideService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Create a guide',
     operationId: 'createGuide',
@@ -74,7 +76,7 @@ export class GuideController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Update a guide',
     operationId: 'updateGuide',
@@ -91,7 +93,7 @@ export class GuideController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Delete a guide',
     operationId: 'deleteGuide',

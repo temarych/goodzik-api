@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Guide } from '@modules/guide/guide.entity';
+import { UserRole } from '../enums/user.enum';
 
 @Entity()
 export class User {
@@ -15,8 +16,8 @@ export class User {
   @Column()
   public password: string;
 
-  @Column()
-  public role: string;
+  @Column({ enum: UserRole })
+  public role: UserRole;
 
   @OneToMany(() => Guide, (guide) => guide.author)
   public guides: Guide[];

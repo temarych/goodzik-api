@@ -6,7 +6,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
 
