@@ -44,22 +44,6 @@ export class GuideController {
     return GuideDto.fromEntity(guide);
   }
 
-  @Get(':id')
-  @UseGuards(AuthGuard)
-  @ApiOperation({
-    summary: 'Get a guide',
-    operationId: 'getGuide',
-    tags: ['guide'],
-  })
-  @ApiSecurity('bearer')
-  @ApiOkResponse({ type: GuideDto })
-  @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async getGuide(@Param() id: string) {
-    const guide = await this.guideService.findOne(id);
-    if (!guide) throw new ApiError(ApiErrorCode.EntityNotFound);
-    return GuideDto.fromEntity(guide);
-  }
-
   @Get()
   @UseGuards(AuthGuard)
   @ApiOperation({
@@ -73,6 +57,22 @@ export class GuideController {
   public async getGuides() {
     const guides = await this.guideService.findAll();
     return guides.map(GuideDto.fromEntity);
+  }
+
+  @Get(':id')
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: 'Get a guide',
+    operationId: 'getGuide',
+    tags: ['guide'],
+  })
+  @ApiSecurity('bearer')
+  @ApiOkResponse({ type: GuideDto })
+  @ApiUnauthorizedResponse({ type: ApiErrorDto })
+  public async getGuide(@Param('id') id: string) {
+    const guide = await this.guideService.findOne(id);
+    if (!guide) throw new ApiError(ApiErrorCode.EntityNotFound);
+    return GuideDto.fromEntity(guide);
   }
 
   @Put(':id')

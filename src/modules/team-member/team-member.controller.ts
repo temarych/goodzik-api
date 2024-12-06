@@ -40,12 +40,11 @@ export class TeamMemberController {
   @ApiOkResponse({ type: TeamMemberDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async createTeamMember(@Body() data: CreateTeamMemberDto) {
-    const TeamMember = await this.teamMemberService.create(data);
-    return TeamMemberDto.fromEntity(TeamMember);
+    const teamMember = await this.teamMemberService.create(data);
+    return TeamMemberDto.fromEntity(teamMember);
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get a team member',
     operationId: 'getTeamMember',
@@ -54,14 +53,13 @@ export class TeamMemberController {
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: TeamMemberDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async getTeamMember(@Param() id: string) {
-    const TeamMember = await this.teamMemberService.findOne(id);
-    if (!TeamMember) throw new ApiError(ApiErrorCode.EntityNotFound);
-    return TeamMemberDto.fromEntity(TeamMember);
+  public async getTeamMember(@Param('id') id: string) {
+    const teamMember = await this.teamMemberService.findOne(id);
+    if (!teamMember) throw new ApiError(ApiErrorCode.EntityNotFound);
+    return TeamMemberDto.fromEntity(teamMember);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get team members',
     operationId: 'getTeamMembers',
@@ -71,8 +69,8 @@ export class TeamMemberController {
   @ApiOkResponse({ type: [TeamMemberDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getTeamMembers() {
-    const TeamMembers = await this.teamMemberService.findAll();
-    return TeamMembers.map(TeamMemberDto.fromEntity);
+    const teamMembers = await this.teamMemberService.findAll();
+    return teamMembers.map(TeamMemberDto.fromEntity);
   }
 
   @Put(':id')

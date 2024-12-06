@@ -45,7 +45,6 @@ export class PartnerController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get a Partner',
     operationId: 'getPartner',
@@ -54,14 +53,13 @@ export class PartnerController {
   @ApiSecurity('bearer')
   @ApiOkResponse({ type: PartnerDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
-  public async getPartner(@Param() id: string) {
+  public async getPartner(@Param('id') id: string) {
     const Partner = await this.partnerService.findOne(id);
     if (!Partner) throw new ApiError(ApiErrorCode.EntityNotFound);
     return PartnerDto.fromEntity(Partner);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get Partners',
     operationId: 'getPartners',
