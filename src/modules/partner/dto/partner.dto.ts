@@ -6,21 +6,13 @@ export class PartnerDto {
   public id: string;
 
   @ApiProperty()
-  public fullName: string;
-
-  @ApiProperty()
-  public imageUrl: string;
-
-  @ApiProperty()
-  public position: string;
+  public name: string;
 
   public static fromEntity(entity: Partner): PartnerDto {
     const dto = new PartnerDto();
 
     dto.id = entity.id;
-    dto.fullName = entity.fullName;
-    dto.imageUrl = entity.imageUrl;
-    dto.position = entity.position;
+    dto.name = entity.name;
 
     return dto;
   }

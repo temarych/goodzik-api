@@ -1,10 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Partner {
+export class TeamMember {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
   @Column()
-  public name: string;
+  public fullName: string;
+
+  @Column()
+  public imageUrl: string;
+
+  @Column()
+  public position: string;
 }
