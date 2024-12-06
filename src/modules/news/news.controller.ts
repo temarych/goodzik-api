@@ -1,8 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { telegram_scraper } from 'telegram-scraper';
-import { ApiBadRequestResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
 import { NewsDto } from './dto/news.dto';
+import { NewsResponseDto } from './dto/news.response.dto';
 
 const firstTelegramChannelName = 'vyroby_shveina_rota';
 const secondTelegramChannelName = 'shveina_rota';
@@ -11,7 +16,7 @@ const secondTelegramChannelName = 'shveina_rota';
 export class NewsController {
   @Get()
   @ApiOperation({ summary: 'News', operationId: 'getNews', tags: ['news'] })
-  //   @ApiOkResponse({ type: NewsDto })
+  @ApiOkResponse({ type: NewsResponseDto })
   @ApiBadRequestResponse({ type: ApiErrorDto })
   async getNews() {
     const news1 = JSON.parse(await telegram_scraper(firstTelegramChannelName));
@@ -47,6 +52,5 @@ export class NewsController {
     });
 
     return modifiedNews.map((news) => NewsDto.fromEntity(news));
-    // return modifiedNews;
   }
 }
