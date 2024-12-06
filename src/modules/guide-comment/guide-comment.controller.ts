@@ -32,7 +32,7 @@ export class GuideCommentController {
   constructor(private readonly guideCommentService: GuideCommentService) {}
 
   @Post()
-  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
+  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Create a guide comment',
     operationId: 'createGuideComment',
