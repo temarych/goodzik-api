@@ -9,6 +9,15 @@ export class GuideStep {
   @Column()
   public name: string;
 
+  @Column()
+  public order: number;
+
+  @Column()
+  public description: string;
+
+  @Column()
+  public image: string;
+
   @ManyToOne(() => Guide, (guide) => guide.categories)
   public guides: Guide[];
 }
