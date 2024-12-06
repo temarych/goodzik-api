@@ -6,11 +6,5 @@ export class Partner {
   public id: string;
 
   @Column()
-  public fullName: string;
-
-  @Column()
-  public imageUrl: string;
-
-  @Column()
-  public position: string;
+  public name: string;
 }

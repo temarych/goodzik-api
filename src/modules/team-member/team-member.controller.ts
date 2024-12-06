@@ -23,7 +23,7 @@ import { CreateTeamMemberDto } from './dto/create-team-member.dto';
 import { UpdateTeamMemberDto } from './dto/update-team-member.dto';
 import { TeamMemberDto } from './dto/team-member.dto';
 
-@Controller('TeamMembers')
+@Controller('team-members')
 export class TeamMemberController {
   constructor(private readonly teamMemberService: TeamMemberService) {}
 
