@@ -4,10 +4,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { GuideCategory } from '@modules/guide-category/guide-category.entity';
 import { User } from '@modules/user/entities/user.entity';
+import { GuideStep } from '@modules/guide-step/guide-step.entity';
 
 @Entity()
 export class Guide {
@@ -29,6 +31,9 @@ export class Guide {
   @ManyToMany(() => GuideCategory, (category) => category.guides)
   @JoinTable()
   public categories: GuideCategory[];
+
+  @OneToMany(() => GuideStep, (step) => step.guides)
+  public steps: GuideStep[];
 
   @ManyToOne(() => User, (user) => user.id)
   public author: User;

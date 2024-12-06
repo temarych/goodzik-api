@@ -7,6 +7,7 @@ import { NewsModule } from '@modules/news/news.module';
 import { AdminModule } from '@modules/admin/admin.module';
 import { GuideModule } from '@modules/guide/guide.module';
 import { GuideCategoryModule } from '@modules/guide-category/guide-category.module';
+import { GuideStepModule } from '@modules/guide-step/guide-step.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { GuideCategoryModule } from '@modules/guide-category/guide-category.modu
     AdminModule,
     GuideModule,
     GuideCategoryModule,
+    GuideStepModule,
   ],
 })
 export class AppModule {}
