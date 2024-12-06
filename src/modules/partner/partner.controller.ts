@@ -50,7 +50,6 @@ export class PartnerController {
     operationId: 'getPartner',
     tags: ['partner'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: PartnerDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getPartner(@Param('id') id: string) {
@@ -65,7 +64,6 @@ export class PartnerController {
     operationId: 'getPartners',
     tags: ['partner'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: [PartnerDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getPartners() {

@@ -50,7 +50,6 @@ export class TeamMemberController {
     operationId: 'getTeamMember',
     tags: ['team-member'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: TeamMemberDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getTeamMember(@Param('id') id: string) {
@@ -65,7 +64,6 @@ export class TeamMemberController {
     operationId: 'getTeamMembers',
     tags: ['team-member'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: [TeamMemberDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getTeamMembers() {
