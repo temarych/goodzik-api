@@ -15,7 +15,11 @@ export class GuideCommentService {
   ) {}
 
   public async create(data: CreateGuideCommentData): Promise<GuideComment> {
-    return await this.cuideCommentRepository.save(data);
+    return await this.cuideCommentRepository.save({
+      ...data,
+      author: { id: data.authorId },
+      guide: { id: data.guideId },
+    });
   }
 
   public async findAll(): Promise<GuideComment[]> {
