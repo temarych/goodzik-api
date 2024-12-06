@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { NewsModule } from '@modules/news/news.module';
-import { AdminModule } from '@modules/admin/admin.module';
 import { GuideModule } from '@modules/guide/guide.module';
 import { GuideCategoryModule } from '@modules/guide-category/guide-category.module';
 import { GuideStepModule } from '@modules/guide-step/guide-step.module';
@@ -30,7 +29,6 @@ import { TeamMemberModule } from '@modules/team-member/team-member.module';
     AuthModule,
     UserModule,
     NewsModule,
-    AdminModule,
     GuideModule,
     GuideCategoryModule,
     GuideStepModule,

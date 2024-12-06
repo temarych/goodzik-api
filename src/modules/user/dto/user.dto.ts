@@ -31,6 +31,8 @@ export class UserDto {
 
     dto.id = entity.id;
     dto.email = entity.email;
+    dto.userName = entity.userName;
+    dto.role = entity.role;
 
     return dto;
   }

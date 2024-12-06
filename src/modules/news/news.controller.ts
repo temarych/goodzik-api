@@ -30,12 +30,30 @@ export class NewsController {
     );
 
     const allNews = [...filteredFirstChannelNews, ...news2];
-    const newsWithDatetime = allNews.filter((news: News) => news.datetime);
+    const newsWithDatetime = allNews.filter(
+      (news: News) => news.datetime && news.message_text,
+    );
     const sortedNews = newsWithDatetime.sort(
       (a: News, b: News) =>
         new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
     );
 
-    return sortedNews;
+    const modifiedNews = sortedNews.map((news: News) => {
+      const idPrefix = news.data_post.startsWith('shveina_rota')
+        ? 'shveina_rota/'
+        : 'vyroby_shveina_rota/';
+      const newsId = news.data_post.replace(idPrefix, '');
+      const newsTitle = news.message_text.split('.')[0];
+
+      return {
+        id: newsId,
+        title: newsTitle,
+        image: news.message_photo,
+        description: news.message_text,
+        date: news.datetime,
+      };
+    });
+
+    return modifiedNews;
   }
 }
