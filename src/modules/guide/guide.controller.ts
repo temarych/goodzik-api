@@ -63,6 +63,7 @@ export class GuideController {
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuides() {
     const guides = await this.guideService.findAll();
+    console.log(guides);
     return guides.map(GuideDto.fromEntity);
   }
 

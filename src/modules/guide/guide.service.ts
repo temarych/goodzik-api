@@ -26,13 +26,15 @@ export class GuideService {
   }
 
   public async findAll(): Promise<Guide[]> {
-    return await this.guideRepository.find();
+    return await this.guideRepository.find({
+      relations: ['author'],
+    });
   }
 
   public async findOne(id: string): Promise<Guide | null> {
     return await this.guideRepository.findOne({
       where: { id },
-      relations: ['steps'],
+      relations: ['steps', 'author'],
     });
   }
 
