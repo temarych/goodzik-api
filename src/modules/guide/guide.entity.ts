@@ -10,6 +10,7 @@ import {
 import { GuideCategory } from '@modules/guide-category/guide-category.entity';
 import { User } from '@modules/user/entities/user.entity';
 import { GuideStep } from '@modules/guide-step/guide-step.entity';
+import { GuideComment } from '@modules/guide-comment/guide-comment.entity';
 
 @Entity()
 export class Guide {
@@ -33,6 +34,9 @@ export class Guide {
 
   @Column('text', { array: true })
   public exampleImages: string[];
+
+  @OneToMany(() => GuideComment, (comment) => comment.id)
+  public comments: GuideComment[];
 
   @ManyToMany(() => GuideCategory, (category) => category.guides)
   @JoinTable()

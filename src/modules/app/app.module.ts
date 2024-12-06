@@ -10,6 +10,7 @@ import { GuideStepModule } from '@modules/guide-step/guide-step.module';
 import { PartnerModule } from '@modules/partner/partner.module';
 import { TeamMemberModule } from '@modules/team-member/team-member.module';
 import { LocationModule } from '@modules/location/location.module';
+import { GuideCommentModule } from '@modules/guide-comment/guide-comment.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { LocationModule } from '@modules/location/location.module';
     PartnerModule,
     TeamMemberModule,
     LocationModule,
+    GuideCommentModule,
   ],
 })
 export class AppModule {}
