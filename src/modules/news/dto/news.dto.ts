@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { News } from './news.entity';
+import { News } from '../news.entity';
 
 export class NewsDto {
   @ApiProperty({
