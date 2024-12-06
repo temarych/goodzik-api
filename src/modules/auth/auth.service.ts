@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@modules/user/user.service';
 import { ApiError } from '@modules/error/api-error.entity';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
+import { UserRole } from '@modules/user/enums/user.enum';
+
 import { HashService } from './hash/hash.service';
 import {
   IAccessTokenPayload,
@@ -32,7 +34,7 @@ export class AuthService {
     const user = await this.userService.create({
       ...data,
       password,
-      role: 'customer',
+      role: UserRole.Customer,
     });
 
     const accessToken = this.jwtService.sign({ id: user.id });

@@ -14,10 +14,12 @@ import {
   ApiSecurity,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AuthGuard } from '@modules/auth/auth.guard';
+import { AuthGuard } from '@modules/auth/guards/auth.guard';
 import { ApiErrorDto } from '@modules/error/api-error.dto';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
+import { UserRole } from '@modules/user/enums/user.enum';
+import { RoleGuard } from '@modules/auth/guards/role.guard';
 import { TeamMemberService } from './team-member.service';
 import { CreateTeamMemberDto } from './dto/create-team-member.dto';
 import { UpdateTeamMemberDto } from './dto/update-team-member.dto';
@@ -28,7 +30,7 @@ export class TeamMemberController {
   constructor(private readonly teamMemberService: TeamMemberService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Create a team member',
     operationId: 'createTeamMember',
@@ -74,7 +76,7 @@ export class TeamMemberController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Update a team member',
     operationId: 'updateTeamMember',
@@ -91,7 +93,7 @@ export class TeamMemberController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard([UserRole.Admin]))
   @ApiOperation({
     summary: 'Delete a team member',
     operationId: 'deleteTeamMember',
