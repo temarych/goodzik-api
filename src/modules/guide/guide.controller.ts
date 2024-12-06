@@ -45,13 +45,11 @@ export class GuideController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get guides',
     operationId: 'getGuides',
     tags: ['guide'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: [GuideDto] })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuides() {
@@ -60,13 +58,11 @@ export class GuideController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get a guide',
     operationId: 'getGuide',
     tags: ['guide'],
   })
-  @ApiSecurity('bearer')
   @ApiOkResponse({ type: GuideDto })
   @ApiUnauthorizedResponse({ type: ApiErrorDto })
   public async getGuide(@Param('id') id: string) {
