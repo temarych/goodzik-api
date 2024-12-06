@@ -45,7 +45,6 @@ export class GuideStepController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get all guide steps',
     operationId: 'getGuideSteps',
@@ -60,7 +59,6 @@ export class GuideStepController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: 'Get a guide step',
     operationId: 'getGuideStep',
