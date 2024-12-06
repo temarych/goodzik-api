@@ -32,5 +32,5 @@ export class NewsDto {
   @ApiProperty({
     description: 'Date of the news',
   })
-  public date: string;
+  public date: Date;
 }
