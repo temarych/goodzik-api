@@ -4,8 +4,7 @@ import { Repository } from 'typeorm';
 import { ApiErrorCode } from '@modules/error/api-error-code.enum';
 import { ApiError } from '@modules/error/api-error.entity';
 import { Guide } from './guide.entity';
-import { CreateGuideDto } from './dto/create-guide.dto';
-import { UpdateGuideDto } from './dto/update-guide.dto';
+import { CreateGuideData, UpdateGuideData } from './guide.service.types';
 
 @Injectable()
 export class GuideService {
@@ -14,8 +13,8 @@ export class GuideService {
     private readonly guideRepository: Repository<Guide>,
   ) {}
 
-  public async create(data: CreateGuideDto): Promise<Guide> {
-    const categories = data.categories.map((category) => ({ id: category }));
+  public async create(data: CreateGuideData): Promise<Guide> {
+    const categories = data.categories?.map((category) => ({ id: category }));
     return await this.guideRepository.save({ ...data, categories });
   }
 
@@ -27,7 +26,7 @@ export class GuideService {
     return await this.guideRepository.findOne({ where: { id } });
   }
 
-  public async update(id: string, data: UpdateGuideDto): Promise<void> {
+  public async update(id: string, data: UpdateGuideData): Promise<void> {
     const guide = await this.findOne(id);
 
     if (!guide) throw new ApiError(ApiErrorCode.EntityNotFound);
